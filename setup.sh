@@ -8,7 +8,7 @@ workspace_dir="$2"
 
 setup_apt() {
   echo "[setup apt] ${__what__} ..."
-  general_apt_dep="git grep wget tar python3 python3-virtualenv python3-dev python3-venv python3-pip"
+  general_apt_dep="git grep wget tar python3 python3-virtualenv python3-dev python3-venv python3-pip vim graphviz"
   apt update && \
     apt install --no-install-recommends -y ${general_apt_dep}
   status=$?
