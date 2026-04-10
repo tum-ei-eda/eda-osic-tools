@@ -1,0 +1,16 @@
+services:
+  esel-proc:
+    image: tumeda/eda-osic-tools-deps:latest-default-ubuntu-latest
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: eda-osic-tools-deps
+      args:
+        workspace_dir: "${workspace_dir:-/eda-osic-tools}"
+        ENV_VENV_ROOT: "${ENV_VENV_ROOT:-/venv}"
+    environment:
+      workspace_dir: "${workspace_dir:-/eda-osic-tools}"
+    volumes:
+      - type: bind
+        source: .
+        target: ${workspace_dir:-/eda-osic-tools}
