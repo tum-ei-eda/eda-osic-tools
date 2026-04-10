@@ -23,7 +23,6 @@ fetch() {
   __home__="${PWD}"
   git clone --branch "${ref}" --single-branch "${url}" "${src_dir}" --progress && \
     cd "${src_dir}" && \
-    rm -rf .git/ && \
     cd "${__home__}"
   status=$?
 
