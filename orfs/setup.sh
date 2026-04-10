@@ -36,7 +36,9 @@ install() {
   src_dir="$1"
   __home__="${PWD}"
   cd "${src_dir}"
-  sudo ./setup.sh&& \
+  sudo ./setup.sh && \
+  ./build_openroad.sh && \
+  rm -rf .git/ && \
     cd "${__home__}"
   status=$?
 
