@@ -67,11 +67,11 @@ jobs:
           file: dockerfile
           pull: true
           push: true
-          target: eda-osic-tools-deps
+          target: eda-osic-tools
           build-args: |
             BASE_IMAGE=${{ github.event.inputs.base-image }}
             workspace_dir=${{ env.workspace_dir }}
             ENV_VENV_ROOT=/venv
           tags: |
-            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_NAMESPACE }}/eda-osic-tools-deps:${{ steps.timestamp.outputs.builddate }}-${{ github.event.inputs.ref }}-${{ steps.os.outputs.os }}
-            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_NAMESPACE }}/eda-osic-tools-deps:latest-${{ github.event.inputs.ref }}-${{ steps.os.outputs.os }}
+            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_NAMESPACE }}/eda-osic-tools:${{ steps.timestamp.outputs.builddate }}-${{ github.event.inputs.ref }}-${{ steps.os.outputs.os }}
+            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_NAMESPACE }}/eda-osic-tools:latest-${{ github.event.inputs.ref }}-${{ steps.os.outputs.os }}

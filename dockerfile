@@ -2,7 +2,7 @@ ARG BASE_IMAGE=ubuntu:latest
 ARG workspace_dir=/eda-osic-tools
 ARG ENV_VENV_ROOT=/venv
 ###########################################################
-FROM ${BASE_IMAGE} AS eda-osic-tools-deps
+FROM ${BASE_IMAGE} AS eda-osic-tools
 SHELL ["/bin/bash", "-lc"]
 ARG workspace_dir=/eda-osic-tools
 ARG ENV_VENV_ROOT=/venv

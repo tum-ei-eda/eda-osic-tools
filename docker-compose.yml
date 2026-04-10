@@ -1,6 +1,6 @@
 services:
   esel-proc:
-    image: tumeda/eda-osic-tools-deps:latest-default-ubuntu-latest
+    image: tumeda/eda-osic-tools:latest-default-ubuntu-latest
     build:
       context: .
       dockerfile: dockerfile
