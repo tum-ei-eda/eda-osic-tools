@@ -6,11 +6,6 @@
 
 Builds a Docker image with the `eda-osic-tools` environment and OpenROAD Flow Scripts (ORFS), Open-PDKs, etc.
 
-## Requirements
-
-- Docker with Buildx
-- Free disk space on the Docker host
-
 ## Configuration
 
 Defaults live in [`.env`](.env):
@@ -21,6 +16,14 @@ Defaults live in [`.env`](.env):
 - `ENV_YOSYS_EXE=/orfs/dependencies/bin/yosys`
 
 ## Build
+
+### Requirements
+
+- Docker with Buildx, or
+- Docker with compose, or
+- Free disk space on the Docker host
+
+### Buildx
 
 ```bash
 docker buildx build . -f dockerfile \
@@ -33,9 +36,34 @@ docker buildx build . -f dockerfile \
   --build-arg ENV_VENV_ROOT=/venv
 ```
 
-## Compose
+### Compose
 
 ```bash
 docker-compose --env-file .env up --build
 ```
 
+## Prebuilt
+
+### Pull
+
+```bash
+docker pull tumeda/eda-osic-tools:latest-default-ubuntu-latest
+```
+
+### Launch
+
+Run an interactive shell with the current checkout mounted into the default workspace:
+
+```bash
+docker run --rm -it \
+  -v "$(pwd)":/your-workspace \
+  -w /your-workspace \
+  tumeda/eda-osic-tools:latest-default-ubuntu-latest \
+  bash
+```
+
+Inside the container, load the default environment from the copied `/eda-osic-tools`:
+
+```bash
+. /eda-osic-tools/env.sh /eda-osic-tools/.env
+```
