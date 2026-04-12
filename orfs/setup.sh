@@ -37,10 +37,12 @@ install() {
   src_dir="$1"
   install_dir="$2"
   __home__="${PWD}"
-  cd "${src_dir}"
+  cd "${src_dir}" && \
     etc/DependencyInstaller.sh -base && \
     etc/DependencyInstaller.sh -common && \
-    ./build_openroad.sh --install-path "${install_dir}" -o && \
+    mkdir -p "${install_dir}/tools/install" && \
+    ./build_openroad.sh --install-path "${install_dir}/tools/install" -o && \
+    cp -r flow/ "${install_dir}/flow"
     cd "${__home__}"
   status=$?
 
