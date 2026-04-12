@@ -28,7 +28,8 @@ source_venv() {
   return ${status}
 }
 
-__env_file__="$1"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+__env_file__="${1:-${SCRIPT_DIR}/.env}"
 echo -n "[env] ..."
 source_env "${__env_file__}" && source_venv
 echo -n "[env] done."
