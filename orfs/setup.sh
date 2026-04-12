@@ -5,7 +5,7 @@ __detail__="OpenROAD Flow Scripts"
 setup_apt() {
   echo "[setup apt] ${__what__} ..."
 
-  general_apt_dep="git grep sudo" # sudo requried because orfs scripts hard coded for it...
+  general_apt_dep="git grep"
   apt update && \
     apt install --no-install-recommends -y ${general_apt_dep}
   status=$?
@@ -36,8 +36,28 @@ install() {
   src_dir="$1"
   __home__="${PWD}"
   cd "${src_dir}"
-  sudo ./setup.sh && \
-  ./build_openroad.sh && \
+  if [ "$(id -u)" -eq 0 ]; then
+    if command -v sudo >/dev/null 2>&1; then
+      SUDO_USER="${SUDO_USER:-root}" ./setup.sh
+    else
+      sudo_shim_dir="$(mktemp -d)"
+      cat > "${sudo_shim_dir}/sudo" <<'EOF'
+#!/usr/bin/env bash
+if [ "${1:-}" = "-u" ]; then
+  shift 2
+fi
+exec "$@"
+EOF
+      chmod +x "${sudo_shim_dir}/sudo"
+      PATH="${sudo_shim_dir}:${PATH}" SUDO_USER="${SUDO_USER:-root}" ./setup.sh
+      status=$?
+      rm -rf "${sudo_shim_dir}"
+      [ "${status}" -eq 0 ]
+    fi
+  else
+    sudo ./setup.sh
+  fi && \
+  ./build_openroad.sh -o && \
   rm -rf .git/ && \
     cd "${__home__}"
   status=$?
