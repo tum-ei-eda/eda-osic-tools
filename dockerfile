@@ -29,10 +29,10 @@ RUN \
 RUN \
   --mount=type=bind,source=".",target=${workspace_dir} \
   . "${workspace_dir}/env.sh" "${workspace_dir}/.env" && \
-  . "${workspace_dir}/orfs/setup.sh" "${ORFS_ROOT}"
-########
+  . "${workspace_dir}/orfs/setup.sh" "/orfs-src" "${ORFS_ROOT}"
+#############
 # verilator #
-########
+#############
 RUN \
   --mount=type=bind,source=".",target=${workspace_dir} \
   . "${workspace_dir}/env.sh" "${workspace_dir}/.env" && \

@@ -35,12 +35,12 @@ install() {
   echo "[install] ${__what__} ..."
 
   src_dir="$1"
+  install_dir="$2"
   __home__="${PWD}"
   cd "${src_dir}"
-  etc/DependencyInstaller.sh -base && \
-  etc/DependencyInstaller.sh -common && \
-  ./build_openroad.sh -o && \
-  rm -rf .git/ && \
+    etc/DependencyInstaller.sh -base && \
+    etc/DependencyInstaller.sh -common && \
+    ./build_openroad.sh --install-path "${install_dir}" -o && \
     cd "${__home__}"
   status=$?
 
@@ -48,9 +48,20 @@ install() {
   return "${status}"
 }
 
-__root__="$1"
+clean() {
+  echo "[clean] ${__what__} ..."
+  src_dir="$1"
+
+  rm -rf "${src_dir}"
+
+  echo "[clean] ${__what__} done."
+  return "${status}"
+}
+
+__src__="$1"
+__root__="$2"
 echo -n "[setup] ${__detail__} (${__what__}) at '${__root__}'"
-setup_apt && fetch "${__root__}" && install "${__root__}"
+setup_apt && fetch "${__src__}" && install "${__src__}" "${__root__}" && clean "${__src__}"
 status=$?
 echo -n "[setup] ${__detail__} (${__what__}) at '${__root__}' done."
 return "${status}" 2>/dev/null || exit "${status}"
